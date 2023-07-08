@@ -3,9 +3,8 @@ package core
 import com.beust.klaxon.Klaxon
 import com.jagrosh.jdautilities.command.CommandClientBuilder
 import commands.infos.InfoCommand
-import commands.moderation.BanCommand
-import commands.moderation.KickCommand
-import commands.moderation.MuteCommand
+import commands.moderation.*
+import events.UnbanAutocomplete
 import io.github.cdimascio.dotenv.Dotenv
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.OnlineStatus
@@ -22,7 +21,7 @@ class KNTBot {
     companion object {
 
         const val mainColor: Int = 0x6666CC
-        const val version: String = "0.2"
+        const val version: String = "0.3"
 
 
         fun getCommandLocalizedHelp(commandName: String) : Map<DiscordLocale, String> {
@@ -127,6 +126,8 @@ class KNTBot {
 
         // Loading mod commands \\
 
+        commandClientBuilder.addSlashCommand(UnmuteCommand())
+        commandClientBuilder.addSlashCommand(UnbanCommand())
         commandClientBuilder.addSlashCommand(KickCommand())
         commandClientBuilder.addSlashCommand(MuteCommand())
         commandClientBuilder.addSlashCommand(BanCommand())
@@ -138,7 +139,7 @@ class KNTBot {
 
         JDABuilder.create(Dotenv.load()["token"], GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))
             .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
-            .addEventListeners(commandClient)
+            .addEventListeners(commandClient, UnbanAutocomplete())
             .setEventPassthrough(true)
             .build()
 

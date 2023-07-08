@@ -111,13 +111,21 @@ class MuteCommand : SlashCommand() {
             }
         }
 
-        var durationTimeInSeconds: Int = 0
+        var durationTimeInSeconds = 0
 
         when (muteDurationUnit) {
             "seconds" -> durationTimeInSeconds = muteDurationTime
             "minutes" -> durationTimeInSeconds = muteDurationTime * 60
             "hours" -> durationTimeInSeconds = muteDurationTime * 60 * 60
             "days" -> durationTimeInSeconds = muteDurationTime * 60 * 60 * 24
+        }
+
+        if (durationTimeInSeconds > 1209600) {  // 2 недели
+            return event.hook.editOriginalEmbeds(
+                Utils.errorEmbed(event, "mute.error.durationLimit")
+            ).queue {
+                it.delete().queueAfter(10, TimeUnit.SECONDS)
+            }
         }
 
         try {
