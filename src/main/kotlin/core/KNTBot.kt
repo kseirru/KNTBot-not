@@ -5,6 +5,7 @@ import com.jagrosh.jdautilities.command.CommandClientBuilder
 import commands.infos.InfoCommand
 import commands.moderation.BanCommand
 import commands.moderation.KickCommand
+import commands.moderation.MuteCommand
 import io.github.cdimascio.dotenv.Dotenv
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.OnlineStatus
@@ -21,11 +22,11 @@ class KNTBot {
     companion object {
 
         const val mainColor: Int = 0x6666CC
-        const val version: String = "0.1"
+        const val version: String = "0.2"
 
 
         fun getCommandLocalizedHelp(commandName: String) : Map<DiscordLocale, String> {
-            val resourcesFolder = "src/main/resources"
+            val resourcesFolder = "src/main/resources/localization"
             val resourcesDirectory = File(resourcesFolder)
             if (!resourcesDirectory.exists() || !resourcesDirectory.isDirectory) {
                 LoggerFactory.getLogger("I18n KNTBOT").error("Resources folder not found.")
@@ -52,7 +53,7 @@ class KNTBot {
         }
 
         fun getOptionLocalizedDescription(commandName: String, optionName: String) : Map<DiscordLocale, String> {
-            val resourcesFolder = "src/main/resources"
+            val resourcesFolder = "src/main/resources/localization"
             val resourcesDirectory = File(resourcesFolder)
             if (!resourcesDirectory.exists() || !resourcesDirectory.isDirectory) {
                 LoggerFactory.getLogger("I18n KNTBOT").error("Resources folder not found.")
@@ -78,6 +79,33 @@ class KNTBot {
             return localizedHelps
         }
 
+        fun getChoiceLocalizedName(commandName: String, choiceName: String) : Map<DiscordLocale, String> {
+            val resourcesFolder = "src/main/resources/localization"
+            val resourcesDirectory = File(resourcesFolder)
+            if (!resourcesDirectory.exists() || !resourcesDirectory.isDirectory) {
+                LoggerFactory.getLogger("I18n KNTBOT").error("Resources folder not found.")
+                return emptyMap()
+            }
+
+            val jsonFiles = resourcesDirectory.listFiles { file ->
+                file.isFile && file.name.endsWith(".json")
+            }
+
+            val localizedChoiceName = HashMap<DiscordLocale, String>()
+
+            if (jsonFiles != null) {
+                for (file in jsonFiles) {
+                    val inputStream = file.inputStream()
+                    val loc = Klaxon().parse<Map<String, String>>(inputStream)
+
+                    localizedChoiceName[DiscordLocale.from(file.name.split(".")[0])] = loc?.get("${commandName}.choices.${choiceName}.name")!!
+                    inputStream.close()
+                }
+            }
+
+            return localizedChoiceName
+        }
+
     }
 
     init {
@@ -100,6 +128,7 @@ class KNTBot {
         // Loading mod commands \\
 
         commandClientBuilder.addSlashCommand(KickCommand())
+        commandClientBuilder.addSlashCommand(MuteCommand())
         commandClientBuilder.addSlashCommand(BanCommand())
 
         // Loading other commands \\

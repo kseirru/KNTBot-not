@@ -39,9 +39,6 @@ class KickCommand : SlashCommand() {
         val userToKick = event.getOption("user")?.asUser
         val moderator = event.user
 
-        /*
-        If moderator tries to ban self
-         */
         if(moderator == userToKick) {
             return event.hook.editOriginalEmbeds(
                 Utils.errorEmbed(event, "kick.error.self-purge")
@@ -50,9 +47,6 @@ class KickCommand : SlashCommand() {
             }
         }
 
-        /*
-        If moderator tries to ban this bot
-        */
         if(userToKick?.id == event.jda.selfUser.id) {
             return event.hook.editOriginalEmbeds(
                 Utils.errorEmbed(event, "kick.error.bot-purge")
@@ -61,9 +55,6 @@ class KickCommand : SlashCommand() {
             }
         }
 
-        /*
-        If moderator tries to ban guild owner
-         */
         if(userToKick == event.guild!!.owner?.user) {
             return event.hook.editOriginalEmbeds(
                 Utils.errorEmbed(event, "kick.error.owner-purge")
@@ -72,13 +63,7 @@ class KickCommand : SlashCommand() {
             }
         }
 
-        /*
-        Check if user is member of guild
-         */
         if(event.guild!!.isMember(userToKick!!)) {
-            /*
-            Check if bot can interact with this member
-             */
             if(event.guild!!.getMember(event.jda.selfUser)?.canInteract(event.guild!!.getMember(userToKick)!!) == false) {
                 return event.hook.editOriginalEmbeds(
                     Utils.errorEmbed(event, "kick.error.cant-interact")
@@ -94,9 +79,6 @@ class KickCommand : SlashCommand() {
             }
         }
 
-        /*
-        Check bot permissions
-         */
         if(event.guild!!.getMember(event.jda.selfUser)?.hasPermission(Permission.KICK_MEMBERS) == false) {
             return event.hook.editOriginalEmbeds(
                 Utils.errorEmbed(event, "kick.error.missing-permissions")

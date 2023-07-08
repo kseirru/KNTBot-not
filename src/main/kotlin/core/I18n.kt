@@ -1,7 +1,6 @@
 package core
 
 import com.beust.klaxon.Klaxon
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class I18n(lang: String) {
@@ -10,9 +9,9 @@ class I18n(lang: String) {
     private var status: Boolean = true
 
     init {
-        var inputStream = ClassLoader.getSystemResourceAsStream(this.language + ".json")
+        var inputStream = ClassLoader.getSystemResourceAsStream("localization/" + this.language + ".json")
         if (inputStream == null) {
-            inputStream = ClassLoader.getSystemResourceAsStream("en-US.json")
+            inputStream = ClassLoader.getSystemResourceAsStream("localization/en-US.json")
             LoggerFactory.getLogger("i18n").error("InputStream is null! Language: ${this.language}")
         }
 
@@ -66,7 +65,7 @@ class I18n(lang: String) {
         this.language = language
         var inputStream = ClassLoader.getSystemResourceAsStream(this.language + ".json")
         if (inputStream == null) {
-            inputStream = ClassLoader.getSystemResourceAsStream("en-US.json")
+            inputStream = ClassLoader.getSystemResourceAsStream("localization/en-US.json")
             LoggerFactory.getLogger("i18n").error("Language file not found!\nLanguage: [${this.language}]")
         }
 

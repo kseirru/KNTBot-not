@@ -5,17 +5,13 @@ import com.jagrosh.jdautilities.command.SlashCommandEvent
 import core.I18n
 import core.KNTBot
 import dev.minn.jda.ktx.messages.Embed
-import dev.minn.jda.ktx.messages.MessageCreateBuilder
-import dev.minn.jda.ktx.messages.MessageEdit
 import models.GuildConfig
-import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDAInfo
 import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.interactions.components.buttons.Button
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder
-import net.dv8tion.jda.api.utils.messages.MessageCreateData
 import net.dv8tion.jda.api.utils.messages.MessageEditBuilder
-import kotlin.math.round
+
 
 class InfoCommand : SlashCommand() {
     init {
