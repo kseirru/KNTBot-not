@@ -21,5 +21,10 @@ class Utils {
             }
         }
 
+        fun containsOnlyNumbers(string: String): Boolean {
+            return string.all { it.isDigit() }
+        }
+
+
     }
 }

@@ -98,5 +98,19 @@
   "info.main.title": "Системная информация",
   "info.stats.title": "Статистика:",
 
-  "info.developer.label": "Разработчик"
+  "info.developer.label": "Разработчик",
+
+  "================================================================================": "",
+  "steamApp.help": "Получить информацию о пользователе Steam",
+
+  "steamApp.error.no-found": "Приложение не найдено!",
+  "steamApp.error.not-supported-type": "Данный тип приложения пока что не поддерживается ботом!",
+
+  "steamApp.success.developers": "Разработчик:",
+  "steamApp.success.publishers": "Издатель:",
+  "steamApp.success.releaseDate": "Дата выхода:",
+  "steamApp.success.genres": "Жанры:",
+  "steamApp.success.price": "Стоимость:",
+  "steamApp.success.platforms": "Платформы",
+  "steamApp.success.rightNow": "игроков прямо сейчас"
 }
