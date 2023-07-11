@@ -45,3 +45,4 @@ bin/
 ### Other ###
 .env
 kntbot.db
+appList.json

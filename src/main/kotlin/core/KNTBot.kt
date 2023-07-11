@@ -2,6 +2,8 @@ package core
 
 import com.beust.klaxon.Klaxon
 import com.jagrosh.jdautilities.command.CommandClientBuilder
+import commands.embed.EmbedCommand
+import commands.embed.interactionHandler.*
 import commands.infos.InfoCommand
 import commands.moderation.*
 import commands.steam.steam
@@ -127,7 +129,8 @@ class KNTBot {
         db.close()
 
         log.info("Loading Steam app list...")
-        SteamAPI.loadGames()
+        // SteamAPI.loadGames()  TODO: Потом как нибудь обратно включить
+        log.info("Steam app list disabled.")
 
         log.info("Loading bot...")
         val commandClientBuilder = CommandClientBuilder()
@@ -148,11 +151,17 @@ class KNTBot {
         commandClientBuilder.addSlashCommand(InfoCommand())
         commandClientBuilder.addSlashCommand(steam())
 
+        commandClientBuilder.addSlashCommand(EmbedCommand())
+
         val commandClient = commandClientBuilder.build()
 
         JDABuilder.create(Dotenv.load()["token"], GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))
             .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
             .addEventListeners(commandClient, UnbanAutocomplete(), SteamAppAutocomplete())
+            .addEventListeners(EmbedSetTitle(), EmbedSetColor(), EmbedSetDescription())
+            .addEventListeners(EmbedAddField(), EmbedEditField(), EmbedEditFieldTwo())
+            .addEventListeners(EmbedDeleteField(), EmbedDeleteFieldTwo(), EmbedSetThumbnail())
+            .addEventListeners(EmbedSetImage(), ButtonSubmit())
             .setEventPassthrough(true)
             .build()
 

@@ -7,6 +7,8 @@
   "main.user": "Пользователь:",
   "main.reason": "Причина:",
   "main.duration": "На срок:",
+  "main.cancel": "Отменить",
+  "main.cancel.description": "Вернуться назад",
 
   "================================================================================": "",
   "ban.help": "Заблокировать пользователя на сервере.",
@@ -112,5 +114,77 @@
   "steamApp.success.genres": "Жанры:",
   "steamApp.success.price": "Стоимость:",
   "steamApp.success.platforms": "Платформы",
-  "steamApp.success.rightNow": "игроков прямо сейчас"
+  "steamApp.success.rightNow": "игроков прямо сейчас",
+
+  "===============================================================================": "",
+  "embedCreate.help": "Создать эмбед.",
+
+  "embedCreate.defaultEmbed.title": "Заголовок эмбеда",
+  "embedCreate.defaultEmbed.description": "Текст внутри эмбеда",
+
+  "embedCreate.selectMenu.setTitle": "Изменить заголовок",
+  "embedCreate.selectMenu.setDescription": "Изменить текст внутри",
+  "embedCreate.selectMenu.setColor": "Изменить цвет",
+  "embedCreate.selectMenu.addField": "Добавить доп. поле",
+  "embedCreate.selectMenu.editField": "Изменить доп. поле",
+  "embedCreate.selectMenu.deleteField": "Удалить доп. поле",
+  "embedCreate.selectMenu.setThumbnail": "Изменить иконку",
+  "embedCreate.selectMenu.setImage": "Изменить изображение",
+  "embedCreate.selectMenu.setAuthor": "Изменить автора",
+  "embedCreate.selectMenu.setFooter": "Изменить сноску",
+  "embedCreate.selectMenu.placeholder": "Выберите нужное действие",
+
+  "embedCreate.submitButton.label": "Отправить",
+
+  "embedSetTitle.modal.title": "Изменить заголовок",
+  "embedSetTitle.newTitle.label": "Новый заголовок",
+  "embedSetTitle.newTitle.placeholder": "Введите новый заголовок эмбеда (может быть пустым, если присутствует текст внутри эмбеда)",
+
+  "embedCreate.modal.error.noDescription": "Для удаления заголовка должен присутствовать текст внутри эмбеда!",
+  "embedCreate.modal.error.symbolLimit": "Был достигнут лимит в 5000 символов!",
+
+  "embedSetColor.modal.title": "Изменить цвет",
+  "embedSetColor.newColor.label": "Новый цвет (#FFFFFF)",
+  "embedSetColor.newColor.placeholder": "Введите новый цвет в формате HEX (#FFFFFF)",
+
+  "embedSetDescription.modal.title": "Изменить текст внутри",
+  "embedSetDescription.newDescription.label": "Новый текст",
+  "embedSetDescription.newDescription.placeholder": "Введите новый текст (может быть пустым, если присутствует заголовок).",
+
+  "embedCreate.modal.error.noTitle": "Для удаления текста внутри должен присутствовать заголовок!",
+  "embedCreate.modal.error.fieldLimit": "Достигнут лимит количества доп. полей!\nМаксимальное количество доп. полей - 20",
+
+  "embedAddField.modal.title": "Добавить доп. поле",
+  "embedAddField.fieldName.label": "Название доп. поля",
+  "embedAddField.fieldName.placeholder": "Введите название доп. поля",
+  "embedAddField.fieldValue.label": "Текст внутри доп. поля",
+  "embedAddField.fieldValue.placeholder": "Введите текст внутри доп. поля",
+  "embedAddField.inline.label": "В одну линию? 1 - Да | 0 - Нет",
+  "embedAddField.inline.placeholder": "В одну линию? 1 - Да | 0 - Нет",
+
+  "embedAddField.error.same-name": "Нельзя создать доп. поле с таким же названием!",
+
+  "embedEditField.selectFieldMenu.placeholder": "Выберите доп. поле",
+  "embedEditField.error.noFields": "Доп. полей не обнаружено!",
+
+  "embedEditField.message.content": "Выберите нужное вам доп. поле через список ниже.",
+
+  "embedEditFieldTwo.modal.title": "Изменить доп. поле",
+  "embedEditFieldTwo.newFieldName.label": "Новое название доп. поля",
+  "embedEditFieldTwo.newFieldName.placeholder": "Введите новое название для доп. поля",
+  "embedEditFieldTwo.newFieldValue.label": "Новый текст внутри доп. поля",
+  "embedEditFieldTwo.newFieldValue.placeholder": "Введите новый текст внутри доп. поля",
+  "embedEditFieldTwo.newFieldInline.label": "В одну линию? 1 - Да | 0 - Нет",
+  "embedEditFieldTwo.newFieldInline.placeholder": "В одну линию? 1 - Да | 0 - Нет",
+
+  "embedCreate.setThumbnail.modal.title": "Изменить иконку",
+  "embedCreate.setThumbnail.url.label": "Введите ссылку на иконку",
+  "embedCreate.setThumbnail.url.placeholder": "В формате https://example.com/image.png",
+  "embedCreate.modal.error.wrongUrl": "Вы ввели недействительную ссылку на иконку!",
+
+  "embedCreate.setImage.modal.title": "Изменить иконку",
+  "embedCreate.setImage.url.label": "Введите ссылку на иконку",
+  "embedCreate.setImage.url.placeholder": "В формате https://example.com/image.png",
+
+  "embedCreate.success": "Эмбед был успешно отправлен!"
 }

@@ -112,5 +112,29 @@
   "steamApp.success.genres": "Жанры:",
   "steamApp.success.price": "Стоимость:",
   "steamApp.success.platforms": "Платформы",
-  "steamApp.success.rightNow": "игроков прямо сейчас"
+  "steamApp.success.rightNow": "игроков прямо сейчас",
+
+  "===============================================================================": "",
+  "embedCreate.help": "Создать эмбед.",
+
+  "embedCreate.defaultEmbed.title": "Заголовок эмбеда",
+  "embedCreate.defaultEmbed.description": "Текст внутри эмбеда",
+
+  "embedCreate.selectMenu.setTitle": "Изменить заголовок",
+  "embedCreate.selectMenu.setDescription": "Изменить текст внутри",
+  "embedCreate.selectMenu.setColor": "Изменить цвет",
+  "embedCreate.selectMenu.addField": "Добавить доп. поле",
+  "embedCreate.selectMenu.editField": "Изменить доп. поле",
+  "embedCreate.selectMenu.deleteField": "Удалить доп. поле",
+  "embedCreate.selectMenu.setThumbnail": "Изменить иконку",
+  "embedCreate.selectMenu.setImage": "Изменить изображение",
+  "embedCreate.selectMenu.setAuthor": "Изменить автора",
+  "embedCreate.selectMenu.setFooter": "Изменить сноску",
+  "embedCreate.selectMenu.placeholder": "Выберите нужное действие",
+
+  "embedCreate.submitButton.label": "Отправить",
+
+  "embedSetTitle.modal.title": "Изменить заголовок",
+  "embedSetTitle.newTitle.label": "Новый заголовок",
+  "embedSetTitle.newTitle.placeholder": "Введите новый заголовок эмбеда (может быть пустым, если присутствует текст внутри эмбеда)"
 }

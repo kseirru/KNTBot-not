@@ -8,7 +8,7 @@ import java.time.Instant
 
 class Utils {
     companion object {
-        private const val errorColor: Int = 0xe74c3c
+        const val errorColor: Int = 0xe74c3c
 
         fun errorEmbed(event: SlashCommandEvent, key: String) : MessageEmbed {
             val guildConfig = GuildConfig(event.guild!!.id)
