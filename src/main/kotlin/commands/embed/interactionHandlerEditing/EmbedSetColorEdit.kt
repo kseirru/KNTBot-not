@@ -1,4 +1,4 @@
-package commands.embed.interactionHandler
+package commands.embed.interactionHandlerEditing
 
 import core.I18n
 import core.Utils
@@ -9,50 +9,55 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
-import org.apache.commons.validator.routines.UrlValidator
+import org.slf4j.LoggerFactory
 import java.time.Instant
 
-class EmbedSetImage : ListenerAdapter() {
+class EmbedSetColorEdit  : ListenerAdapter() {
+    @OptIn(ExperimentalStdlibApi::class)
     override fun onStringSelectInteraction(event: StringSelectInteractionEvent) {
-        if(event.values[0] != "embedCreate.selectMenu.setImage") { return }
+        if(event.values[0] != "embedEdit.selectMenu.setColor") { return }
 
         val guildConfig = GuildConfig(event.guild!!.id)
         val tr = I18n(guildConfig.getLocale())
 
         val oldEmbed = event.message.embeds[0]
 
-        val modal = ModalBuilder("embedCreate.setImage.modal", tr.get("embedCreate.setImage.modal.title"))
-        modal.short("embedCreate.setImage.url", tr.get("embedCreate.setImage.url.label"), false, oldEmbed.image?.url, tr.get("embedCreate.setImage.url.placeholder"))
+        val modal = ModalBuilder("embedEdit.embedSetColor.modal", tr.get("embedSetColor.modal.title"))
+
+        modal.short("embedSetColor.newColor", tr.get("embedSetColor.newColor.label"), false, oldEmbed.colorRaw.toHexString(HexFormat { number.prefix = "#"; upperCase = true; number.removeLeadingZeros = true}), tr.get("embedSetColor.newColor.placeholder"), IntRange(0, 10))
 
         event.replyModal(modal.build()).queue()
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun onModalInteraction(event: ModalInteractionEvent) {
-        if(event.modalId != "embedCreate.setImage.modal") { return }
+        if(event.modalId != "embedEdit.embedSetColor.modal") { return }
 
         val guildConfig = GuildConfig(event.guild!!.id)
         val tr = I18n(guildConfig.getLocale())
-        val newEmbed = EmbedBuilder.fromData(event.message!!.embeds[0].toData())
-        var newImageUrl = event.getValue("embedCreate.setImage.url")?.asString
 
-        if(newImageUrl == "") {
-            newImageUrl = null
+        val oldEmbed = event.message!!.embeds[0]
+        val newEmbed = EmbedBuilder.fromData(oldEmbed.toData())
+
+        val newColor = event.getValue("embedSetColor.newColor")?.asString
+        if(newColor == "") {
+            newEmbed.setColor(0x6666CC)
         } else {
-            val urlValidator = UrlValidator()
-            if(!urlValidator.isValid(newImageUrl)) {
+            try {
+                newEmbed.setColor(newColor!!.hexToInt(HexFormat {
+                    number.prefix = "#"; number.removeLeadingZeros = true
+                }))
+            } catch (e: Exception) {
                 return event.replyEmbeds(
                     Embed {
                         title = tr.get("main.error-occurred")
                         color = Utils.errorColor
-                        description = "```\n${tr.get("embedCreate.modal.error.wrongUrl")}\n```"
+                        description = "```\n${tr.get("embedEdit.setColor.wrongColor")}\n```"
                         timestamp = Instant.now()
                     }
                 ).setEphemeral(true).queue()
             }
         }
-
-
-        newEmbed.setImage(newImageUrl)
 
         event.editMessageEmbeds(newEmbed.build()).queue()
 

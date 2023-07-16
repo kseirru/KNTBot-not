@@ -3,10 +3,12 @@ package core
 import com.beust.klaxon.Klaxon
 import com.jagrosh.jdautilities.command.CommandClientBuilder
 import commands.embed.EmbedCommand
-import commands.embed.interactionHandler.*
+import commands.embed.interactionHandlerCreating.*
+import commands.embed.interactionHandlerEditing.*
 import commands.infos.InfoCommand
 import commands.moderation.*
 import commands.steam.steam
+import events.EmbedEditAutocomplete
 import events.SteamAppAutocomplete
 import events.UnbanAutocomplete
 import io.github.cdimascio.dotenv.Dotenv
@@ -18,8 +20,6 @@ import net.dv8tion.jda.api.interactions.DiscordLocale
 import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.api.utils.cache.CacheFlag
 import org.slf4j.LoggerFactory
-import org.slf4j.event.LoggingEvent
-import steam.SteamAPI
 import java.io.File
 import java.sql.DriverManager
 
@@ -27,7 +27,7 @@ class KNTBot {
     companion object {
 
         const val mainColor: Int = 0x6666CC
-        const val version: String = "0.3.1"
+        const val version: String = "0.5"
         const val steamKey: String = "17A9F0CFCF188E1288E101C801E7C6A1"
         val httpClient = HTTPClient()
 
@@ -161,7 +161,11 @@ class KNTBot {
             .addEventListeners(EmbedSetTitle(), EmbedSetColor(), EmbedSetDescription())
             .addEventListeners(EmbedAddField(), EmbedEditField(), EmbedEditFieldTwo())
             .addEventListeners(EmbedDeleteField(), EmbedDeleteFieldTwo(), EmbedSetThumbnail())
-            .addEventListeners(EmbedSetImage(), ButtonSubmit())
+            .addEventListeners(EmbedSetImage(), ButtonSubmit(), EmbedEditAutocomplete())
+            .addEventListeners(EmbedSetTitleEdit(), EmbedSetColorEdit(), EmbedSetDescriptionEdit())
+            .addEventListeners(EmbedAddFieldEdit(), EmbedEditFieldEdit(), EmbedEditFieldEditTwo())
+            .addEventListeners(EmbedDeleteFieldEdit(), EmbedDeleteFieldTwoEdit(), EmbedSetImageEdit())
+            .addEventListeners(EmbedSetThumbnailEdit(), ButtonSubmitEdit())
             .setEventPassthrough(true)
             .build()
 

@@ -39,7 +39,7 @@ class EmbedCreateCommand : SlashCommand() {
             // .addOption(tr.get("embedCreate.selectMenu.setFooter"), "embedCreate.selectMenu.setFooter")
             .setPlaceholder(tr.get("embedCreate.selectMenu.placeholder"))
 
-        // TODO: Сделать возможность указать автора и сделать сноску
+        // TODO: Сделать возможность указать автора и сделать сноскуы
 
         val submitButton = Button.success("embedCreate.submitButton", tr.get("embedCreate.submitButton.label"))
 

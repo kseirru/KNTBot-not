@@ -186,5 +186,14 @@
   "embedCreate.setImage.url.label": "Введите ссылку на иконку",
   "embedCreate.setImage.url.placeholder": "В формате https://example.com/image.png",
 
-  "embedCreate.success": "Эмбед был успешно отправлен!"
+  "embedCreate.success": "Эмбед был успешно отправлен!",
+
+  "embedEdit.help": "Изменить эмбед",
+  "embedEdit.options.embed.description": "Выберите эмбед",
+  "embedEdit.submitButton.label": "Изменить",
+
+  "embedEdit.error.not-found": "Эмбед не был найден!",
+  "embedEdit.setColor.wrongColor": "Вы неправильно ввели HEX код цвета!",
+
+  "embedEdit.success": "Эмбед был успешно изменен!"
 }

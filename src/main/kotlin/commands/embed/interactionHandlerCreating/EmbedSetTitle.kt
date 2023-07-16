@@ -1,4 +1,4 @@
-package commands.embed.interactionHandler
+package commands.embed.interactionHandlerCreating
 
 import core.I18n
 import core.Utils
@@ -11,36 +11,23 @@ import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionE
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import java.time.Instant
 
-class EmbedAddField : ListenerAdapter() {
+class EmbedSetTitle : ListenerAdapter() {
     override fun onStringSelectInteraction(event: StringSelectInteractionEvent) {
-        if(event.values[0] != "embedCreate.selectMenu.addField") { return }
+        if(event.values[0] != "embedCreate.selectMenu.setTitle") { return }
 
         val guildConfig = GuildConfig(event.guild!!.id)
         val tr = I18n(guildConfig.getLocale())
 
         val oldEmbed = event.message.embeds[0]
 
-        if(oldEmbed.fields.count() > 20) {
-            return event.replyEmbeds(
-                Embed {
-                    title = tr.get("main.error-occurred")
-                    color = Utils.errorColor
-                    description = "```\n${tr.get("embedCreate.modal.error.fieldLimit")}\n```"
-                    timestamp = Instant.now()
-                }
-            ).setEphemeral(true).queue()
-        }
-
-        val modal = ModalBuilder("embedAddField.modal", tr.get("embedAddField.modal.title"))
-        modal.short("embedAddField.fieldName", tr.get("embedAddField.fieldName.label"), true, null, tr.get("embedAddField.fieldName.placeholder"), IntRange(1, 256))
-        modal.paragraph("embedAddField.fieldValue", tr.get("embedAddField.fieldValue.label"), true, null, tr.get("embedAddField.fieldValue.placeholder"), IntRange(1, 1024))
-        modal.short("embedAddField.inline", tr.get("embedAddField.inline.label"), true, "1", tr.get("embedAddField.inline.placeholder"), IntRange(1, 1))
+        val modal = ModalBuilder("embedSetTitle.modal", tr.get("embedSetTitle.modal.title"))
+        modal.short("embedSetTitle.newTitle", tr.get("embedSetTitle.newTitle.label"), false, oldEmbed.title, tr.get("embedSetTitle.newTitle.placeholder"), IntRange(0, 90))
 
         event.replyModal(modal.build()).queue()
     }
 
     override fun onModalInteraction(event: ModalInteractionEvent) {
-        if(event.modalId != "embedAddField.modal") { return }
+        if(event.modalId != "embedSetTitle.modal") { return }
 
         val guildConfig = GuildConfig(event.guild!!.id)
         val tr = I18n(guildConfig.getLocale())
@@ -48,26 +35,24 @@ class EmbedAddField : ListenerAdapter() {
         val oldEmbed = event.message!!.embeds[0]
         val newEmbed = EmbedBuilder.fromData(oldEmbed.toData())
 
-        val fieldName = event.getValue("embedAddField.fieldName")?.asString
-        val fieldValue = event.getValue("embedAddField.fieldValue")?.asString
-        val fieldInline = event.getValue("embedAddField.inline")?.asString == "1"
-
-        newEmbed.addField(fieldName!!, fieldValue!!, fieldInline)
-
-        for (field in oldEmbed.fields) {
-            if(field.name == fieldName) {
+        val newTitle = event.getValue("embedSetTitle.newTitle")
+        if (newTitle?.asString == "") {
+            if (oldEmbed.description == null) {
                 return event.replyEmbeds(
                     Embed {
                         title = tr.get("main.error-occurred")
                         color = Utils.errorColor
-                        description = "```\n${tr.get("embedAddField.error.same-name")}\n```"
+                        description = "```\n${tr.get("embedCreate.modal.error.noDescription")}\n```"
                         timestamp = Instant.now()
                     }
                 ).setEphemeral(true).queue()
             }
+            newEmbed.setTitle(null)
+        } else {
+            newEmbed.setTitle(newTitle?.asString)
         }
 
-        if(newEmbed.length() > 5000) {
+        if(oldEmbed.length > 5000) {
             return event.replyEmbeds(
                 Embed {
                     title = tr.get("main.error-occurred")
@@ -77,9 +62,8 @@ class EmbedAddField : ListenerAdapter() {
                 }
             ).setEphemeral(true).queue()
         }
-
+        
         event.editMessageEmbeds(newEmbed.build()).queue()
-
 
     }
 }

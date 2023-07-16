@@ -16,7 +16,7 @@ class EmbedCommand : SlashCommand() {
         userPermissions = arrayOf(Permission.MANAGE_CHANNEL)
         guildOnly = true
 
-        children = arrayOf(EmbedCreateCommand())
+        children = arrayOf(EmbedCreateCommand(), EmbedEditCommand())
     }
 
     override fun execute(event: SlashCommandEvent?) {}

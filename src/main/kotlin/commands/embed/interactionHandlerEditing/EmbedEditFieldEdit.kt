@@ -1,21 +1,19 @@
-package commands.embed.interactionHandler
+package commands.embed.interactionHandlerEditing
 
 import core.I18n
 import core.Utils
 import dev.minn.jda.ktx.messages.Embed
-import dev.minn.jda.ktx.messages.EmbedAccumulator
 import dev.minn.jda.ktx.messages.MessageCreateBuilder
 import models.GuildConfig
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu
 import net.dv8tion.jda.api.utils.messages.MessageEditBuilder
-import net.dv8tion.jda.api.utils.messages.MessageEditData
 import java.time.Instant
 
-class EmbedEditField : ListenerAdapter() {
+class EmbedEditFieldEdit  : ListenerAdapter() {
     override fun onStringSelectInteraction(event: StringSelectInteractionEvent) {
-        if(event.values[0] != "embedCreate.selectMenu.editField") { return }
+        if(event.values[0] != "embedEdit.selectMenu.editField") { return }
 
         val guildConfig = GuildConfig(event.guild!!.id)
         val tr = I18n(guildConfig.getLocale())
@@ -34,7 +32,7 @@ class EmbedEditField : ListenerAdapter() {
             ).setEphemeral(true).queue()
         }
 
-        val stringSelectMenu = StringSelectMenu.create("embedEditField.selectFieldMenu")
+        val stringSelectMenu = StringSelectMenu.create("embedEdit.embedEditField.selectFieldMenu")
         stringSelectMenu.setPlaceholder(tr.get("embedEditField.selectFieldMenu.placeholder"))
 
         for (field in fields) {
@@ -49,7 +47,7 @@ class EmbedEditField : ListenerAdapter() {
 
         stringSelectMenu.addOption(
             tr.get("main.cancel"),
-            "cancel",
+            "editEmbed.cancel",
             tr.get("main.cancel.description")
         )
 

@@ -1,4 +1,4 @@
-package commands.embed.interactionHandler
+package commands.embed.interactionHandlerCreating
 
 import core.I18n
 import core.Utils

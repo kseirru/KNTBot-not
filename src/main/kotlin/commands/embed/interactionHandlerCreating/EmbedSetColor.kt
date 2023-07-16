@@ -1,12 +1,15 @@
-package commands.embed.interactionHandler
+package commands.embed.interactionHandlerCreating
 
 import core.I18n
+import core.Utils
 import dev.minn.jda.ktx.interactions.components.ModalBuilder
+import dev.minn.jda.ktx.messages.Embed
 import models.GuildConfig
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
+import java.time.Instant
 import kotlin.text.HexFormat
 
 class EmbedSetColor : ListenerAdapter() {
@@ -20,7 +23,7 @@ class EmbedSetColor : ListenerAdapter() {
         val oldEmbed = event.message.embeds[0]
 
         val modal = ModalBuilder("embedSetColor.modal", tr.get("embedSetColor.modal.title"))
-        modal.short("embedSetColor.newColor", tr.get("embedSetColor.newColor.label"), false, oldEmbed.colorRaw.toHexString(HexFormat { number.prefix = "#"; upperCase = true; number.removeLeadingZeros = true}), tr.get("embedSetColor.newColor.placeholder"), IntRange(0, 7))
+        modal.short("embedSetColor.newColor", tr.get("embedSetColor.newColor.label"), false, oldEmbed.colorRaw.toHexString(HexFormat { number.prefix = "#"; upperCase = true; number.removeLeadingZeros = true}), tr.get("embedSetColor.newColor.placeholder"), IntRange(0, 10))
 
         event.replyModal(modal.build()).queue()
     }
@@ -39,7 +42,20 @@ class EmbedSetColor : ListenerAdapter() {
         if(newColor == "") {
             newEmbed.setColor(0x6666CC)
         } else {
-            newEmbed.setColor(newColor!!.hexToInt(HexFormat { number.prefix = "#"; number.removeLeadingZeros = true}))
+            try {
+                newEmbed.setColor(newColor!!.hexToInt(HexFormat {
+                    number.prefix = "#"; number.removeLeadingZeros = true
+                }))
+            } catch (e: Exception) {
+                return event.replyEmbeds(
+                    Embed {
+                        title = tr.get("main.error-occurred")
+                        color = Utils.errorColor
+                        description = "```\n${tr.get("embedEdit.setColor.wrongColor")}\n```"
+                        timestamp = Instant.now()
+                    }
+                ).setEphemeral(true).queue()
+            }
         }
 
         event.editMessageEmbeds(newEmbed.build()).queue()
