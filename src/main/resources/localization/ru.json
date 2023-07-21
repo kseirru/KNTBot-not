@@ -195,5 +195,17 @@
   "embedEdit.error.not-found": "Эмбед не был найден!",
   "embedEdit.setColor.wrongColor": "Вы неправильно ввели HEX код цвета!",
 
-  "embedEdit.success": "Эмбед был успешно изменен!"
+  "embedEdit.success": "Эмбед был успешно изменен!",
+
+  "===============================================================================": "",
+  "userinfo.help": "Информация о пользователе.",
+
+  "userinfo.options.user.description": "Пользователь.",
+  "userinfo.registerDate": "Дата регистрации:",
+  "userinfo.joinedAt": "Зашел на сервер:",
+
+  "userinfo.setdescription.help": "Установить свое описание.",
+  "userinfo.modal.title": "Установить описание",
+  "userinfo.newDescription.label": "Новое описание",
+  "userinfo.newDescription.placeholder": "Введите новое описание."
 }

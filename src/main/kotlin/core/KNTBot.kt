@@ -5,7 +5,7 @@ import com.jagrosh.jdautilities.command.CommandClientBuilder
 import commands.embed.EmbedCommand
 import commands.embed.interactionHandlerCreating.*
 import commands.embed.interactionHandlerEditing.*
-import commands.infos.InfoCommand
+import commands.infos.*
 import commands.moderation.*
 import commands.steam.steam
 import events.EmbedEditAutocomplete
@@ -118,6 +118,7 @@ class KNTBot {
     init {
         // Database init \\
         val createGuildConfig = "CREATE TABLE IF NOT EXISTS guildConfig (guildId TEXT, locale TEXT)"
+        val createUserDescription = "CREATE TABLE IF NOT EXISTS userDescription (userId TEXT, description TEXT)"
 
         val log = LoggerFactory.getLogger("KNTBot INIT")
         log.info("Loading database...")
@@ -125,6 +126,7 @@ class KNTBot {
         val db = DriverManager.getConnection("jdbc:sqlite:kntbot.db")
         val statement = db.createStatement()
         statement.execute(createGuildConfig)
+        statement.execute(createUserDescription)
         statement.close()
         db.close()
 
@@ -149,6 +151,7 @@ class KNTBot {
 
         // Loading other commands \\
         commandClientBuilder.addSlashCommand(InfoCommand())
+        commandClientBuilder.addSlashCommand(UserCommand())
         commandClientBuilder.addSlashCommand(steam())
 
         commandClientBuilder.addSlashCommand(EmbedCommand())
@@ -165,7 +168,7 @@ class KNTBot {
             .addEventListeners(EmbedSetTitleEdit(), EmbedSetColorEdit(), EmbedSetDescriptionEdit())
             .addEventListeners(EmbedAddFieldEdit(), EmbedEditFieldEdit(), EmbedEditFieldEditTwo())
             .addEventListeners(EmbedDeleteFieldEdit(), EmbedDeleteFieldTwoEdit(), EmbedSetImageEdit())
-            .addEventListeners(EmbedSetThumbnailEdit(), ButtonSubmitEdit())
+            .addEventListeners(EmbedSetThumbnailEdit(), ButtonSubmitEdit(), SetDescriptionModal())
             .setEventPassthrough(true)
             .build()
 

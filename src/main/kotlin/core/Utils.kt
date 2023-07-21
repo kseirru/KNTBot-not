@@ -25,6 +25,25 @@ class Utils {
             return string.all { it.isDigit() }
         }
 
+        fun getRGBArr(pixel: Int): IntArray? {
+            val alpha = pixel shr 24 and 0xff
+            val red = pixel shr 16 and 0xff
+            val green = pixel shr 8 and 0xff
+            val blue = pixel and 0xff
+            return intArrayOf(red, green, blue)
+        }
+
+        fun isGray(rgbArr: IntArray): Boolean {
+            val rgDiff = rgbArr[0] - rgbArr[1]
+            val rbDiff = rgbArr[0] - rgbArr[2]
+            // Filter out black, white and grays...... (tolerance within 10 pixels)
+            val tolerance = 10
+            if (rgDiff > tolerance || rgDiff < -tolerance) if (rbDiff > tolerance || rbDiff < -tolerance) {
+                return false
+            }
+            return true
+        }
+
 
     }
 }
